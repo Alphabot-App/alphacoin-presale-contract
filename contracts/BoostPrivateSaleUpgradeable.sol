@@ -6,16 +6,16 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract BoostPrivateSaleUpgradeable is Initializable, OwnableUpgradeable {
-    address public usdt;
-    address public usdc;
+    address immutable usdt;
+    address immutable usdc;
 
     event PrivateSale(address indexed sender, address indexed token, uint256 value);
     event Withdrawn(address indexed token, uint256 value, address indexed recipient);
 
-    function initialize(
+    constructor(
         address _usdt,
         address _usdc
-    ) public initializer {
+    ) {
         usdt = _usdt;
         usdc = _usdc;
         __Ownable_init(

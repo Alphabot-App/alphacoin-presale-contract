@@ -1,4 +1,9 @@
+import { config } from "dotenv";
 import { ethers } from "hardhat";
+
+config();
+
+const { USDT_ADDRESS, USDC_ADDRESS } = process.env;
 
 async function main() {
   const currentTimestampInSeconds = Math.round(Date.now() / 1000);
@@ -6,9 +11,17 @@ async function main() {
 
   const lockedAmount = ethers.parseEther("0.001");
 
-  const lock = await ethers.deployContract("Lock", [unlockTime], {
-    value: lockedAmount,
-  });
+  const lock = await ethers.deployContract(
+    "BoostPrivateSaleUpgradeable",
+    [
+      USDT_ADDRESS, //usdt
+      USDC_ADDRESS, //usdc
+    ],
+    {
+      value: lockedAmount,
+      gasLimit: 1500000,
+    }
+  );
 
   await lock.waitForDeployment();
 
