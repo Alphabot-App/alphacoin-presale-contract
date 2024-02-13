@@ -24,6 +24,7 @@ contract BoostPrivateSaleUpgradeable is Initializable, OwnableUpgradeable {
     }
 
     function privateSaleWithEth() external payable {
+        require(msg.value > 0, "Non zero value");
         emit PrivateSale(msg.sender, address(0x0), msg.value);
     }
 

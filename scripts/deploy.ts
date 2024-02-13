@@ -1,35 +1,28 @@
 import { config } from "dotenv";
-import { ethers } from "hardhat";
+import { ethers, upgrades } from "hardhat";
 
 config();
 
 const { USDT_ADDRESS, USDC_ADDRESS } = process.env;
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = currentTimestampInSeconds + 60;
+  const factory = await ethers.getContractFactory("BoostPrivateSaleUpgradeable");
+  const contract = await upgrades.deployProxy(factory, [
+    "0x7169d38820dfd117c3fa1f22a697dba58d90ba06",
+    "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+  ]);
 
-  const lockedAmount = ethers.parseEther("0.001");
+  console.log("BoostPrivateSaleUpgradeable deployed to:", contract.address);
 
   const lock = await ethers.deployContract(
     "BoostPrivateSaleUpgradeable",
     [
       USDT_ADDRESS, //usdt
       USDC_ADDRESS, //usdc
-    ],
-    {
-      value: lockedAmount,
-      gasLimit: 1500000,
-    }
+    ]
   );
 
   await lock.waitForDeployment();
-
-  console.log(
-    `Lock with ${ethers.formatEther(
-      lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.target}`
-  );
 }
 
 // We recommend this pattern to be able to use async/await everywhere
