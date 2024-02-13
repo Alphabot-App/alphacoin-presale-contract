@@ -1,23 +1,26 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract BoostPrivateSaleUpgradeable is Initializable, OwnableUpgradeable {
-    address constant usdt;
-    address constant usdc;
+    address public usdt;
+    address public usdc;
 
     event PrivateSale(address indexed sender, address indexed token, uint256 value);
     event Withdrawn(address indexed token, uint256 value, address indexed recipient);
 
     function initialize(
-        address usdt,
-        address usdc
+        address _usdt,
+        address _usdc
     ) public initializer {
-        usdt = usdt;
-        usdc = usdc;
-        __Ownable_init();
+        usdt = _usdt;
+        usdc = _usdc;
+        __Ownable_init(
+            msg.sender
+        );
     }
 
     function privateSaleWithEth() external payable {
