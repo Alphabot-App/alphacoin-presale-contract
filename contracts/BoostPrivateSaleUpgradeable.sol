@@ -6,15 +6,15 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract BoostPrivateSaleUpgradeable is Initializable, OwnableUpgradeable {
-    address public usdt;
-    address public usdc;
+    IERC20 public usdt;
+    IERC20 public usdc;
 
     event PrivateSale(address indexed sender, address indexed token, uint256 value);
     event Withdrawn(address indexed token, uint256 value, address indexed recipient);
 
     function initialize(
-        address _usdt,
-        address _usdc
+        IERC20 _usdt,
+        IERC20 _usdc
     ) public initializer {
         usdt = _usdt;
         usdc = _usdc;
@@ -32,7 +32,9 @@ contract BoostPrivateSaleUpgradeable is Initializable, OwnableUpgradeable {
         address token,
         uint256 amount
     ) external {
-        require(token == usdt || token == usdc, "BoostPrivateSaleUpgradeable: Invalid token");
+        require(token == address(usdt) || token == address(usdc), "BoostPrivateSaleUpgradeable: Invalid token");
+        require(amount > 0, "BoostPrivateSaleUpgradeable: Non zero value");
+        IERC20(token).transferFrom(msg.sender, address(this), amount);
         emit PrivateSale(msg.sender, token, amount);
     }
 
