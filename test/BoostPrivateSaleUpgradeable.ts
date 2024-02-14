@@ -50,6 +50,15 @@ describe("BoostPrivateSaleUpgradeable", function () {
     ).to.be.reverted;
   });
 
+  it("should revert if not approved", async function () {
+    await expect(
+      privateSale.privateSaleWithToken(
+        await usdc.getAddress(),
+        parseEther("100")
+      )
+    ).to.be.revertedWithCustomError(usdc, "ERC20InsufficientAllowance");
+  });
+
   it("should not revert if correct token is used", async function () {
     await usdc.approve(await privateSale.getAddress(), parseEther("100"));
     await expect(
