@@ -12,7 +12,7 @@ async function main() {
     USDC_ADDRESS,
   ]);
 
-  console.log("BoostPrivateSaleUpgradeable deployed to:", contract.address);
+  console.log("BoostPrivateSaleUpgradeable deployed to:", await contract.getAddress());
 
   await contract.waitForDeployment();
 }
