@@ -1,6 +1,10 @@
 node_modules
 .env
 
+# OpenZeppelin
+.openzeppelin/dev-*.json
+.openzeppelin/.session
+
 # Hardhat files
 /cache
 /artifacts

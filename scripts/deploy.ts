@@ -3,13 +3,13 @@ import { ethers, upgrades } from "hardhat";
 
 config();
 
-const { USDT_ADDRESS, USDC_ADDRESS } = process.env;
-
 async function main() {
-  const factory = await ethers.getContractFactory("BoostPrivateSaleUpgradeable");
+  const factory = await ethers.getContractFactory(
+    "BoostPrivateSaleUpgradeable"
+  );
   const contract = await upgrades.deployProxy(factory, [
-    USDT_ADDRESS,
-    USDC_ADDRESS,
+    process.env.USDT_ADDRESS,
+    process.env.USDC_ADDRESS,
   ]);
 
   console.log("BoostPrivateSaleUpgradeable deployed to:", await contract.getAddress());
