@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 contract BoostPrivateSaleUpgradeable is Initializable, OwnableUpgradeable {
     IERC20 internal usdt;
     IERC20 internal usdc;
-    address internal out_addr;
+    address internal outAddr;
 
     event PrivateSale(
         address indexed sender,
@@ -24,18 +24,18 @@ contract BoostPrivateSaleUpgradeable is Initializable, OwnableUpgradeable {
     function initialize(
         IERC20 _usdt,
         IERC20 _usdc,
-        address _out_addr
+        address _outAddr
     ) public initializer {
         usdt = _usdt;
         usdc = _usdc;
-        out_addr = _out_addr;
+        outAddr = _outAddr;
 
         __Ownable_init(msg.sender);
     }
 
     function privateSaleWithEth() external payable {
         require(msg.value > 0, "Non zero value");
-        payable(out_addr).transfer(msg.value);
+        payable(outAddr).transfer(msg.value);
         emit PrivateSale(msg.sender, address(0x0), msg.value);
     }
 
@@ -45,12 +45,12 @@ contract BoostPrivateSaleUpgradeable is Initializable, OwnableUpgradeable {
             "BoostPrivateSaleUpgradeable: Invalid token"
         );
         require(amount > 0, "BoostPrivateSaleUpgradeable: Non zero value");
-        IERC20(token).transferFrom(msg.sender, out_addr, amount);
+        IERC20(token).transferFrom(msg.sender, outAddr, amount);
         emit PrivateSale(msg.sender, token, amount);
     }
 
-    function setOutAddress(address new_addr) external onlyOwner {
-        out_addr = new_addr;
+    function setOutAddress(address newAddr) external onlyOwner {
+        outAddr = newAddr;
     }
 
     // Keeping withdraw function in case for some reason we get some kind of eth or token sent directly to the contract
