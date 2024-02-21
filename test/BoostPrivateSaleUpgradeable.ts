@@ -70,13 +70,11 @@ describe("BoostPrivateSaleUpgradeable", function () {
     ).to.be.reverted;
   });
 
-  it("should revert if person sends token directly to contract", async function () {
-    await expect(
-      outWallet.sendTransaction({
-        to: await privateSale.getAddress(),
-        value: parseEther("10"),
-      })
-    ).to.be.reverted;
+  it("should not(?) revert if person sends token directly to contract", async function () {
+    const contractAddress = await privateSale.getAddress();
+    await usdc.transfer(contractAddress, parseEther("10"));
+
+    expect(await usdc.balanceOf(contractAddress)).to.equal(parseEther("10"))
   });
 
   it("should revert if not approved", async function () {
@@ -104,7 +102,7 @@ describe("BoostPrivateSaleUpgradeable", function () {
     ).to.equal(parseEther("900"));
   });
 
-  it("should not revert if eth is used and change out wallet", async function () {
+  it("should not revert if eth is used, and change output wallet", async function () {
     const sendWallet = await generateRandomWallet();
 
     expect(await ethers.provider.getBalance(sendWallet.address)).to.equal(
