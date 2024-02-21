@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "hardhat test",
+    "test": "cross-env NETWORK=hardhat hardhat test",
     "deploy": "npm run build && ts-node scripts/deploy --files",
     "build": "npx hardhat compile"
   },
@@ -15,6 +15,7 @@
     "@nomicfoundation/hardhat-ethers": "^3.0.5",
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",
     "@openzeppelin/hardhat-upgrades": "^3.0.3",
+    "cross-env": "^7.0.3",
     "ethers": "^6.11.0",
     "hardhat": "^2.19.5",
     "ts-node": "^10.9.2",

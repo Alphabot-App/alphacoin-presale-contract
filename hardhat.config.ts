@@ -6,17 +6,17 @@ import "tsconfig-paths/register";
 
 config();
 
-const { API_URL, PRIVATE_KEY, NETWORK = 'sepolia' } = process.env;
+const { API_URL, PRIVATE_KEY, NETWORK = 'hardhat' } = process.env;
 
 const configObj: HardhatUserConfig = {
   solidity: "0.8.20",
   defaultNetwork: NETWORK,
   networks: {
-    // hardhat: {},
     [NETWORK]: {
       url: API_URL,
       accounts: [`0x${PRIVATE_KEY}`],
     },
+    hardhat: {},
   },
 };
 
