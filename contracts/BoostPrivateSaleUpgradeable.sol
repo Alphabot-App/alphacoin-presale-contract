@@ -35,7 +35,8 @@ contract BoostPrivateSaleUpgradeable is Initializable, OwnableUpgradeable {
 
     function privateSaleWithEth() external payable {
         require(msg.value > 0, "Non zero value");
-        payable(outAddr).transfer(msg.value);
+        (bool success, ) = payable(outAddr).call{value: msg.value}("");
+            require(success, "Transfer failed.");
         emit PrivateSale(msg.sender, address(0x0), msg.value);
     }
 
@@ -60,7 +61,8 @@ contract BoostPrivateSaleUpgradeable is Initializable, OwnableUpgradeable {
         address recipient
     ) external onlyOwner {
         if (token == address(0x0)) {
-            payable(recipient).transfer(amount);
+            (bool success, ) = payable(recipient).call{value: amount}("");
+            require(success, "Transfer failed.");
         } else {
             IERC20(token).transfer(recipient, amount);
         }
