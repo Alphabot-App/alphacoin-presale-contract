@@ -3,7 +3,9 @@ pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+
+using SafeERC20 for IERC20;
 
 contract BoostPrivateSaleUpgradeable is Initializable, OwnableUpgradeable {
     IERC20 internal usdt;
@@ -45,7 +47,7 @@ contract BoostPrivateSaleUpgradeable is Initializable, OwnableUpgradeable {
             "BoostPrivateSaleUpgradeable: Invalid token"
         );
         require(amount > 0, "BoostPrivateSaleUpgradeable: Non zero value");
-        IERC20(token).transferFrom(msg.sender, outAddr, amount);
+        IERC20(token).safeTransferFrom(msg.sender, outAddr, amount);
         emit PrivateSale(msg.sender, token, amount);
     }
 
@@ -62,7 +64,7 @@ contract BoostPrivateSaleUpgradeable is Initializable, OwnableUpgradeable {
         if (token == address(0x0)) {
             payable(recipient).transfer(amount);
         } else {
-            IERC20(token).transfer(recipient, amount);
+            IERC20(token).safeTransfer(recipient, amount);
         }
         emit Withdrawn(token, amount, recipient);
     }

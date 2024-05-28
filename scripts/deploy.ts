@@ -10,6 +10,7 @@ async function main() {
   const contract = await upgrades.deployProxy(factory, [
     process.env.USDT_ADDRESS,
     process.env.USDC_ADDRESS,
+    process.env.OUT_ADDRESS,
   ]);
 
   console.log("BoostPrivateSaleUpgradeable deployed to:", await contract.getAddress());
