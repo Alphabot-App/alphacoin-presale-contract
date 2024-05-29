@@ -6,7 +6,8 @@
   "scripts": {
     "test": "cross-env NETWORK=hardhat hardhat test",
     "deploy": "npm run build && ts-node scripts/deploy --files",
-    "build": "npx hardhat compile"
+    "build": "npx hardhat compile",
+    "verify": "npx hardhat verify --network"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,7 @@
   "devDependencies": {
     "@nomicfoundation/hardhat-ethers": "^3.0.5",
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.7",
     "@openzeppelin/hardhat-upgrades": "^3.0.3",
     "cross-env": "^7.0.3",
     "ethers": "^6.11.0",
