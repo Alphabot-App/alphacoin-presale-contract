@@ -6,8 +6,8 @@
   "scripts": {
     "test": "cross-env NETWORK=hardhat hardhat test",
     "deploy": "npm run build && ts-node scripts/deploy --files",
-    "build": "npx hardhat compile",
-    "verify": "npx hardhat verify --network mainnet 0xb17811b0B118B107A4fB5b7DDD8E1cd32ce52Fc1"
+    "build": "hardhat compile",
+    "verify": "hardhat verify --network mainnet 0xb17811b0B118B107A4fB5b7DDD8E1cd32ce52Fc1"
   },
   "keywords": [],
   "author": "",
