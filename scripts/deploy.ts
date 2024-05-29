@@ -8,8 +8,8 @@ async function main() {
     "BoostPrivateSaleUpgradeable"
   );
   const contract = await upgrades.deployProxy(factory, [
-    process.env.USDT_ADDRESS,
-    process.env.USDC_ADDRESS,
+    String(process.env.USDT_ADDRESS).toLocaleLowerCase(),
+    String(process.env.USDC_ADDRESS).toLocaleLowerCase(),
     process.env.OUT_ADDRESS,
   ]);
 
